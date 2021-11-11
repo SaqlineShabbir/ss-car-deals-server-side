@@ -100,6 +100,17 @@ async function run(){
        }
        res.json({admin: isAdmin});
    })
+    //delete car from manage car page
+   app.delete('/cars/:id', async (req, res) =>{
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)};
+    const result = await carCollection.deleteOne(query);
+    console.log('deleting user with id', result);
+    res.json(result);
+   })
+
+
+
 
 
 }
