@@ -56,6 +56,12 @@ async function run(){
             console.log(result)
             res.json(result)
         })
+      // get orders
+        app.get('/orders', async (req, res) =>{
+            const cursor = orderCollection.find({});
+            const cars = await cursor.toArray()
+            res.send(cars)
+        })
 
 
             // get my order for orders
@@ -122,6 +128,16 @@ async function run(){
       const cursor = reviewCollection.find({});
       const review = await cursor.toArray()
        res.send(review)
+   })
+   //update the status
+   app.put('/statusUpdate/:id', async (req, res) =>{
+        const filter = {_id: ObjectId(req.params.id)};
+        const result = await orderCollection.updateOne(filter, {
+            $set: {
+                status: req.body.status,
+            },
+        })
+        res.send(result)
    })
 
 
