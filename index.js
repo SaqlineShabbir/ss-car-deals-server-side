@@ -25,6 +25,7 @@ async function run(){
        const carCollection = database.collection('cars')
        const orderCollection = database.collection('orders')
        const userCollection = database.collection('users')
+       const reviewCollection = database.collection('reviews')
         console.log('db connected')
 
         app.post('/cars', async (req, res) =>{
@@ -109,7 +110,19 @@ async function run(){
     res.json(result);
    })
 
-
+   // reviews
+   app.post('/reviews', async (req, res) =>{
+    const reviewData = req.body;
+    const result = await reviewCollection.insertOne(reviewData);
+    console.log(result)
+    res.json(result)
+   })
+    //get all reviews
+     app.get('/reviews', async (req, res) =>{
+      const cursor = reviewCollection.find({});
+      const review = await cursor.toArray()
+       res.send(review)
+   })
 
 
 
